@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, FlatList, Dimensions, Modal, ActivityIndicator, TextInput } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, FlatList, Dimensions, Modal, ActivityIndicator, TextInput, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
@@ -21,6 +21,7 @@ const ListaCategorias = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [starredArticles, setStarredArticles] = useState<string[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [selectedArticle, setSelectedArticle] = useState<string | null>(null);
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -105,6 +106,15 @@ const ListaCategorias = () => {
     setStarredArticles((prevStarred) => 
       prevStarred.includes(id) ? prevStarred.filter(item => item !== id) : [...prevStarred, id]
     );
+  };
+
+  const handleMoreOptionsPress = () => {
+    setModalVisible2(true);
+  };
+
+  const handleCreateCategory = () => {
+    setModalVisible2(false);
+    navigation.navigate('CrearCategoria');
   };
 
   const handleCreateArticle = () => {
@@ -251,9 +261,29 @@ const ListaCategorias = () => {
           <Text style={styles.selectedDateText}>{formatDate(date)}</Text>
         </View>
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={handleCreateArticle}>
+      <TouchableOpacity style={styles.addButton} onPress={handleMoreOptionsPress}>
         <Ionicons name="add" size={24} color="#000033" />
       </TouchableOpacity>
+
+      {/* Modal de Opciones */}
+      <Modal
+        transparent={true}
+        visible={modalVisible2}
+        animationType="slide"
+        onRequestClose={() => setModalVisible2(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible2(false)}>
+          <View style={styles.modalOverlay} />
+        </TouchableWithoutFeedback>
+        <View style={styles.modalContainer2}>
+          <TouchableOpacity style={styles.modalOption} onPress={handleCreateCategory}>
+            <Text style={styles.modalOptionText}>Crear Categoría</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.modalOption} onPress={handleCreateArticle}>
+            <Text style={styles.modalOptionText}>Crear Artículo</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
 
       <View style={{ marginTop: 20, paddingHorizontal: 10 }}>
         <FlatList
@@ -500,6 +530,27 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
   },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContainer2: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  modalOption: {
+    paddingVertical: 15,
+  },
+  modalOptionText: {
+    fontSize: 18,
+    color: '#000033',
+  },
   separator: {
     height: 1,
     backgroundColor: 'white',
@@ -529,26 +580,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '90%',
     borderRadius: 10,
-
   },
   confirmButton: {
-    backgroundColor: '#FE3777',
+    backgroundColor: '#ff4d4d',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   confirmButtonText: {
-    color: '#fff',
+    color: '#ffffff',
+    fontWeight: 'bold',
     fontSize: 16,
   },
   cancelButton: {
-    backgroundColor: '#0270D0',
+    backgroundColor: '#cccccc',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   cancelButtonText: {
-    color: '#fff',
+    color: '#000000',
+    fontWeight: 'bold',
     fontSize: 16,
   },
   editModalContainer: {
