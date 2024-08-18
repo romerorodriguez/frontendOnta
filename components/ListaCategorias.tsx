@@ -174,8 +174,9 @@ const ListaCategorias = () => {
           'Content-Type': 'application/json',
         },
       });
-      if (response.ok) {
-        setArticles((prevArticles) => prevArticles.filter((article) => article.id!== selectedArticle));
+      if(response.status === 204)  {
+        setArticles(articles.filter(article => article.id!== selectedArticle));
+        setSelectedArticle(null);
         console.log('Deleted', selectedArticle);
         setConfirmModalVisible(false);
       } else {
