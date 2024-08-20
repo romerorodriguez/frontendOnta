@@ -183,9 +183,11 @@ const Inicio = () => {
         animationType="fade"
         onRequestClose={() => setConfirmModalVisible(false)}
       >
-        <TouchableWithoutFeedback onPress={() => setConfirmModalVisible(false)}>
-          <View style={styles.modalOverlay} />
-        </TouchableWithoutFeedback>
+        <TouchableOpacity
+          style={styles.modalBackground}
+          activeOpacity={1}
+          onPressOut={() => setConfirmModalVisible(false)}
+        >
         <View style={styles.confirmModalContainer}>
           <View style={styles.confirmModalContent}>
             <Text style={styles.confirmModalText}>¿Seguro que quieres eliminar esta categoría?</Text>
@@ -199,6 +201,7 @@ const Inicio = () => {
             </View>
           </View>
         </View>
+        </TouchableOpacity>
       </Modal>
     </View>
   );
@@ -299,9 +302,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  modalOverlay: {
+  modalBackground: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   confirmModalContainer: {
     flex: 1,
@@ -314,9 +319,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 300,
     alignItems: 'center',
+    borderWidth: 3,
+    borderColor: '#000033',
   },
   confirmModalText: {
     fontSize: 16,
+    fontWeight: 'bold',
     marginBottom: 20,
   },
   confirmModalButtons: {
@@ -325,7 +333,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   confirmButton: {
-    backgroundColor: '#ff4d4d',
+    backgroundColor: '#FE3777',
     padding: 10,
     borderRadius: 5,
     flex: 1,
@@ -337,14 +345,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   cancelButton: {
-    backgroundColor: '#cccccc',
+    backgroundColor: '#0270D0',
     padding: 10,
     borderRadius: 5,
     flex: 1,
     alignItems: 'center',
   },
   cancelButtonText: {
-    color: '#000000',
+    color: '#ffffff',
     fontWeight: 'bold',
   },
 });

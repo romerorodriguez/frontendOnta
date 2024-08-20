@@ -118,6 +118,7 @@ const ListaCategorias = () => {
   };
 
   const handleCreateArticle = () => {
+    setModalVisible2(false);
     navigation.navigate('CrearArticulo');
   };
 
@@ -568,6 +569,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '80%',
     alignItems: 'center',
+    borderWidth: 3, 
+    borderColor: '#000033'
   },
   confirmModalText: {
     fontSize: 18,
@@ -582,7 +585,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   confirmButton: {
-    backgroundColor: '#ff4d4d',
+    backgroundColor: '#FE3777',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
@@ -593,13 +596,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cancelButton: {
-    backgroundColor: '#cccccc',
+    backgroundColor: '#0270D0',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
   cancelButtonText: {
-    color: '#000000',
+    color: '#ffffff',
     fontWeight: 'bold',
     fontSize: 16,
   },
@@ -614,6 +617,8 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     width: '80%',
+    borderWidth: 3, 
+    borderColor: '#000033',
   },
   editModalTitle: {
     fontSize: 18,
